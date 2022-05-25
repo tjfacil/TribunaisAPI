@@ -1,8 +1,16 @@
 import { Router } from 'express';
-import { getAllCourts } from '../controllers/courts';
+import {
+  getAllCourts,
+  getCourtByAbbr,
+  getCourtById,
+} from '../controllers/courts';
 
 const router = Router();
 
 router.get('/', getAllCourts);
+
+router.get('/:id', getCourtById);
+
+router.get('/:abbr', getCourtByAbbr);
 
 export default router;

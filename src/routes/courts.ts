@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import { param } from 'express-validator';
 import {
   getAllCourts,
   getCourtByAbbr,
@@ -12,8 +13,16 @@ router.get('/', getAllCourts);
 
 router.get('/id/:id', getCourtById);
 
-router.get('/code/:code', getCourtByCode);
+router.get(
+  '/code/:code',
+  [param('code').trim().escape().isNumeric()],
+  getCourtByCode
+);
 
-router.get('/abbr/:abbr', getCourtByAbbr);
+router.get(
+  '/abbr/:abbr',
+  [param('abbr').not().isEmpty().trim().escape().isAlpha()],
+  getCourtByAbbr
+);
 
 export default router;

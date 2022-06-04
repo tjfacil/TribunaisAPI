@@ -1,28 +1,25 @@
 import { Router } from 'express';
-import { param } from 'express-validator';
 import {
   getAllCourts,
   getCourtByAbbr,
   getCourtByCode,
   getCourtById,
 } from '../controllers/courts';
+import {
+  courtAbbrValidators,
+  courtCodeValidators,
+  courtIdValidators,
+  validateRequest,
+} from '../middlewares/validators';
 
 const router = Router();
 
 router.get('/', getAllCourts);
 
-router.get('/id/:id', getCourtById);
+router.get('/id/:id', courtIdValidators, validateRequest, getCourtById);
 
-router.get(
-  '/code/:code',
-  [param('code').trim().escape().isNumeric()],
-  getCourtByCode
-);
+router.get('/code/:code', courtCodeValidators, validateRequest, getCourtByCode);
 
-router.get(
-  '/abbr/:abbr',
-  [param('abbr').not().isEmpty().trim().escape().isAlpha()],
-  getCourtByAbbr
-);
+router.get('/abbr/:abbr', courtAbbrValidators, validateRequest, getCourtByAbbr);
 
 export default router;

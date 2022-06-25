@@ -1,4 +1,5 @@
 import compression from 'compression';
+import cors from 'cors';
 import express from 'express';
 import helmet from 'helmet';
 import mongoose from 'mongoose';
@@ -12,6 +13,8 @@ const port = process.env.PORT || '3000';
 const mongoUri = process.env.MONGO_URI || '';
 
 const app = express();
+
+app.use(cors());
 
 app.use(helmet());
 

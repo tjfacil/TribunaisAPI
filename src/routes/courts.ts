@@ -4,6 +4,7 @@ import {
   getCourtByAbbr,
   getCourtByCode,
   getCourtById,
+  getCourtsSummary
 } from '../controllers/courts';
 import {
   courtAbbrValidators,
@@ -15,6 +16,8 @@ import {
 const router = Router();
 
 router.get('/', getAllCourts);
+
+router.get('/summary', getCourtsSummary)
 
 router.get('/id/:id', courtIdValidators, validateRequest, getCourtById);
 

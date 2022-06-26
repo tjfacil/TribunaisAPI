@@ -9,13 +9,18 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getCourtByAbbr = exports.getCourtByCode = exports.getCourtById = exports.getAllCourts = void 0;
+exports.getCourtByAbbr = exports.getCourtByCode = exports.getCourtById = exports.getCourtsSummary = exports.getAllCourts = void 0;
 const court_1 = require("../models/court");
 const getAllCourts = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const courts = yield court_1.Court.find();
     res.status(200).json({ total: courts.length, courts: courts });
 });
 exports.getAllCourts = getAllCourts;
+const getCourtsSummary = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    const courts = yield court_1.Court.find({}, { name: 1, abbr: 1, code: 1 });
+    res.status(200).json({ total: courts.length, courts: courts });
+});
+exports.getCourtsSummary = getCourtsSummary;
 const getCourtById = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const courtId = req.params.id;
     const court = yield court_1.Court.findById(courtId);

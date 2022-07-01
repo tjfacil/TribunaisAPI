@@ -13,8 +13,8 @@ export const getServicesByCourtCode: RequestHandler = async (
   res,
   next
 ) => {
-  const court = req.params.court;
-  const services = await Service.find({ court_id: court });
+  const court = req.params.code;
+  const services = await Service.find({ codTribunal: court });
 
   res.status(200).json({ total: services.length, services: services });
 };
@@ -24,15 +24,19 @@ export const getServicesByRegionCode: RequestHandler = async (
   res,
   next
 ) => {
-  const region = req.params.region;
-  const services = await Service.find({ comarca_id: region });
+  const region = req.params.code;
+  const services = await Service.find({ codComarca: region });
 
   res.status(200).json({ total: services.length, services: services });
 };
 
-export const getServiceByCode: RequestHandler = async (req, res, next) => {
+export const getServiceByInternalCode: RequestHandler = async (
+  req,
+  res,
+  next
+) => {
   const serviceCode = req.params.code;
-  const service = await Service.find({ id: serviceCode });
+  const service = await Service.find({ codInterno: serviceCode });
 
   res.status(200).json({ service: service });
 };
@@ -48,8 +52,8 @@ export const getServicesSummaryByCourtCode: RequestHandler = async (
   res,
   next
 ) => {
-  const court = req.params.court;
-  const summary = await ServiceSummary.find({ court_id: court });
+  const court = req.params.code;
+  const summary = await ServiceSummary.find({ codTribunal: court });
 
   res.status(200).json({ total: summary.length, summary: summary });
 };

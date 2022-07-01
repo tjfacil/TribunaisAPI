@@ -1,13 +1,13 @@
 import { RequestHandler } from 'express';
 import { param, validationResult } from 'express-validator';
 
-export const courtAbbrValidators = [
+export const abbrValidators = [
   param('abbr').not().isEmpty().trim().escape().isAlpha(),
 ];
 
-export const courtCodeValidators = [param('code').trim().escape().isNumeric()];
+export const codeValidators = [param('code').trim().escape().isNumeric()];
 
-export const courtIdValidators = [param('id').trim().escape().not().isEmpty()];
+export const idValidators = [param('id').trim().escape().not().isEmpty()];
 
 export const validateRequest: RequestHandler = (req, res, next) => {
   const requestErrors = validationResult(req);

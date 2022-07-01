@@ -7,6 +7,7 @@ import errMiddleware from './middlewares/error';
 import notFoundMiddleware from './middlewares/notfound';
 import courtsRoutes from './routes/courts';
 import servicesRoutes from './routes/services';
+import regionsRoutes from './routes/regions';
 
 require('dotenv').config();
 
@@ -24,6 +25,8 @@ app.use(compression());
 app.use('/courts', courtsRoutes);
 
 app.use('/services', servicesRoutes);
+
+app.use('/regions', regionsRoutes);
 
 app.use(notFoundMiddleware);
 

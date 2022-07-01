@@ -4,12 +4,12 @@ import {
   getCourtByAbbr,
   getCourtByCode,
   getCourtById,
-  getCourtsSummary
+  getCourtsSummary,
 } from '../controllers/courts';
 import {
-  courtAbbrValidators,
-  courtCodeValidators,
-  courtIdValidators,
+  abbrValidators,
+  codeValidators,
+  idValidators,
   validateRequest,
 } from '../middlewares/validators';
 
@@ -17,12 +17,12 @@ const router = Router();
 
 router.get('/', getAllCourts);
 
-router.get('/summary', getCourtsSummary)
+router.get('/summary', getCourtsSummary);
 
-router.get('/id/:id', courtIdValidators, validateRequest, getCourtById);
+router.get('/id/:id', idValidators, validateRequest, getCourtById);
 
-router.get('/code/:code', courtCodeValidators, validateRequest, getCourtByCode);
+router.get('/code/:code', codeValidators, validateRequest, getCourtByCode);
 
-router.get('/abbr/:abbr', courtAbbrValidators, validateRequest, getCourtByAbbr);
+router.get('/abbr/:abbr', abbrValidators, validateRequest, getCourtByAbbr);
 
 export default router;

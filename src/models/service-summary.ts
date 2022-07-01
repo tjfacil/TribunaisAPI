@@ -2,21 +2,21 @@ import { model, Schema } from 'mongoose';
 
 export interface IServiceSummary {
   _id?: string;
-  code: string;
-  name: string;
-  data: { id: string; name: string }[];
-  court_id: string;
+  comarcaNome: string;
+  codComarca: string;
+  codTribunal: string;
+  data: { codInterno: string; serventia: string }[];
 }
 
 const schema = new Schema<IServiceSummary>(
   {
-    code: { type: String, required: true },
-    name: { type: String, required: true },
+    comarcaNome: { type: String, required: true },
+    codComarca: { type: String, required: true },
+    codTribunal: { type: String, required: true },
     data: {
-      id: { type: String, required: true },
-      name: { type: String, required: true },
+      codInterno: { type: String, required: true },
+      serventia: { type: String, required: true },
     },
-    court_id: { type: String, required: true },
   },
 
   { collection: 'servicesSummary' }

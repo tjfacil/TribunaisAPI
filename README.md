@@ -27,3 +27,6 @@ npm start
 PORT=
 MONGO_URI=
 ```
+
+## TODO
+- [ ] Pagination

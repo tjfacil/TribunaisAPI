@@ -7,16 +7,21 @@ import {
   getServicesSummary,
   getServicesSummaryByCourtCode,
 } from '../controllers/services';
-import { codeValidators, validateRequest } from '../middlewares/validators';
+import {
+  codeValidators,
+  limitValidators,
+  validateRequest,
+} from '../middlewares/validators';
 
 const router = Router();
 
-router.get('/', getAllServices);
+router.get('/', limitValidators, validateRequest, getAllServices);
 
 router.get('/summary', getServicesSummary);
 
 router.get(
   '/court/:code',
+  limitValidators,
   codeValidators,
   validateRequest,
   getServicesByCourtCode
@@ -24,6 +29,7 @@ router.get(
 
 router.get(
   '/region/:code',
+  limitValidators,
   codeValidators,
   validateRequest,
   getServicesByRegionCode

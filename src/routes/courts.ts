@@ -10,12 +10,18 @@ import {
   abbrValidators,
   codeValidators,
   idValidators,
+  limitValidators,
   validateRequest,
 } from '../middlewares/validators';
 
 const router = Router();
 
-router.get('/', getAllCourts);
+router.get(
+  '/',
+  limitValidators,
+  validateRequest,
+  getAllCourts
+);
 
 router.get('/summary', getCourtsSummary);
 

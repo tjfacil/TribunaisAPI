@@ -1,11 +1,15 @@
 import { RequestHandler } from 'express';
+import { getLimitAndSkip } from '../lib/pagination';
 import { Service } from '../models/service';
 import { ServiceSummary } from '../models/service-summary';
 
 export const getAllServices: RequestHandler = async (req, res, next) => {
-  const services = await Service.find();
+  const { limit, skip } = getLimitAndSkip(req);
 
-  res.status(200).json({ total: services.length, services: services });
+  const services = await Service.find({}, {}, { skip, limit });
+  const total = await Service.count();
+
+  res.status(200).json({ total, services });
 };
 
 export const getServicesByCourtCode: RequestHandler = async (
@@ -13,10 +17,17 @@ export const getServicesByCourtCode: RequestHandler = async (
   res,
   next
 ) => {
+  const { limit, skip } = getLimitAndSkip(req);
   const court = req.params.code;
-  const services = await Service.find({ codTribunal: court });
 
-  res.status(200).json({ total: services.length, services: services });
+  const services = await Service.find(
+    { codTribunal: court },
+    {},
+    { skip, limit }
+  );
+  const total = await Service.count();
+
+  res.status(200).json({ total, services });
 };
 
 export const getServicesByRegionCode: RequestHandler = async (
@@ -24,10 +35,17 @@ export const getServicesByRegionCode: RequestHandler = async (
   res,
   next
 ) => {
+  const { limit, skip } = getLimitAndSkip(req);
   const region = req.params.code;
-  const services = await Service.find({ codComarca: region });
 
-  res.status(200).json({ total: services.length, services: services });
+  const services = await Service.find(
+    { codComarca: region },
+    {},
+    { skip, limit }
+  );
+  const total = await Service.count();
+
+  res.status(200).json({ total, services });
 };
 
 export const getServiceByInternalCode: RequestHandler = async (

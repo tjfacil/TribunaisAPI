@@ -6,7 +6,7 @@ import app from '../src/app';
 
 describe('App tests', () => {
   beforeAll(async () => {
-    const mongoUri = process.env.MONGO_URI || '';
+    const mongoUri = process.env.MONGO_TEST_URI || '';
     await mongoose.connect(mongoUri);
   });
 

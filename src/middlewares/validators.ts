@@ -7,7 +7,9 @@ export const abbrValidators = [
 
 export const codeValidators = [param('code').trim().escape().isNumeric()];
 
-export const idValidators = [param('id').trim().escape().not().isEmpty()];
+export const idValidators = [
+  param('id').trim().escape().not().isEmpty().isMongoId(),
+];
 
 export const limitValidators = [
   query('limit').optional().trim().escape().isNumeric(),

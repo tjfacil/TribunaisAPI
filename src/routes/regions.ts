@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { getAllRegions } from '../controllers/regions';
+import { getAllRegions, getRegionByCourtCode } from '../controllers/regions';
 import { codeValidators, validateRequest } from '../middlewares/validators';
 
 const router = Router();
@@ -10,7 +10,7 @@ router.get(
   '/court/:code',
   codeValidators,
   validateRequest,
-  getAllRegions
+  getRegionByCourtCode
 );
 
 export default router;

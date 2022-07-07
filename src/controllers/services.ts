@@ -1,4 +1,5 @@
 import { RequestHandler } from 'express';
+import { handleResponse } from '../lib/handle-response';
 import { getLimitAndSkip } from '../lib/pagination';
 import { Service } from '../models/service';
 import { ServiceSummary } from '../models/service-summary';
@@ -9,7 +10,7 @@ export const getAllServices: RequestHandler = async (req, res, next) => {
   const services = await Service.find({}, {}, { skip, limit });
   const total = await Service.count();
 
-  res.status(200).json({ total, services });
+  return handleResponse(res, services, { total, services });
 };
 
 export const getServicesByCourtCode: RequestHandler = async (
@@ -25,9 +26,9 @@ export const getServicesByCourtCode: RequestHandler = async (
     {},
     { skip, limit }
   );
-  const total = await Service.count();
+  const total = await Service.count({ codTribunal: court });
 
-  res.status(200).json({ total, services });
+  return handleResponse(res, services, { total, services });
 };
 
 export const getServicesByRegionCode: RequestHandler = async (
@@ -43,9 +44,9 @@ export const getServicesByRegionCode: RequestHandler = async (
     {},
     { skip, limit }
   );
-  const total = await Service.count();
+  const total = await Service.count({ codComarca: region });
 
-  res.status(200).json({ total, services });
+  return handleResponse(res, services, { total, services });
 };
 
 export const getServiceByInternalCode: RequestHandler = async (
@@ -56,13 +57,16 @@ export const getServiceByInternalCode: RequestHandler = async (
   const serviceCode = req.params.code;
   const service = await Service.find({ codInterno: serviceCode });
 
-  res.status(200).json({ service: service });
+  return handleResponse(res, service, { service });
 };
 
 export const getServicesSummary: RequestHandler = async (req, res, next) => {
   const summary = await ServiceSummary.find();
 
-  res.status(200).json({ total: summary.length, summary: summary });
+  return handleResponse(res, summary, {
+    total: summary.length,
+    summary: summary,
+  });
 };
 
 export const getServicesSummaryByCourtCode: RequestHandler = async (
@@ -73,5 +77,8 @@ export const getServicesSummaryByCourtCode: RequestHandler = async (
   const court = req.params.code;
   const summary = await ServiceSummary.find({ codTribunal: court });
 
-  res.status(200).json({ total: summary.length, summary: summary });
+  return handleResponse(res, summary, {
+    total: summary.length,
+    summary: summary,
+  });
 };
